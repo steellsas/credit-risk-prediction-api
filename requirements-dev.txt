@@ -1,0 +1,37 @@
+# ============================================
+# Development Requirements - Credit Risk API
+# Full dependencies for notebooks, EDA, modeling
+# ============================================
+
+# Include production dependencies
+-r requirements-prod.txt
+
+# Jupyter & Interactive
+ipykernel>=6.29.0
+jupyter>=1.0.0
+notebook>=7.0.0
+
+# Visualization
+matplotlib>=3.8.0
+seaborn>=0.13.0
+missingno>=0.5.2
+
+# Feature Engineering & Selection
+feature-engine>=1.8.0
+category-encoders>=2.6.0
+mrmr-selection>=0.2.8
+
+# Statistical Analysis
+scipy>=1.12.0
+statsmodels>=0.14.0
+phik>=0.12.4
+
+# Hyperparameter Optimization
+optuna>=3.6.0
+
+# Data Imputation
+autoimpute>=0.14.0
+
+# Bayesian (optional, heavy)
+# pymc>=5.10.0
+# arviz>=0.18.0

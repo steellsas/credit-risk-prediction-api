@@ -1,9 +1,74 @@
-__pycache__
-*.pyc
-*.pyo
-*.pyd
-.pytest_cache
-.coverage
+# ============================================
+# Docker Ignore - Credit Risk API
+# Exclude development files from production image
+# ============================================
+
+# Git
 .git
 .gitignore
-README.md
+.github
+
+# Python
+__pycache__
+*.py[cod]
+*$py.class
+*.so
+.Python
+.env
+.venv
+venv/
+ENV/
+*.egg-info/
+.eggs/
+*.egg
+
+# Jupyter Notebooks (development only)
+notebooks/
+*.ipynb
+.ipynb_checkpoints/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Testing
+tests/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Documentation
+docs/
+*.md
+!README.md
+
+# Data - exclude raw data, keep only processed
+data/raw/
+data/processed/
+*.csv
+
+# Logs
+logs/
+*.log
+app/logs/*.log
+
+# Development files
+requirements-dev.txt
+docker-compose*.yml
+Makefile
+
+# UV/Poetry
+.python-version
+uv.lock
+poetry.lock
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temporary
+tmp/
+temp/
+*.tmp
