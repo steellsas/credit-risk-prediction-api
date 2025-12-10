@@ -1,74 +1,37 @@
-# ============================================
-# Docker Ignore - Credit Risk API
-# Exclude development files from production image
-# ============================================
+# ===== DATA FILES =====
+data/raw/
+data/processed/
+*.csv
+*.parquet
 
-# Git
-.git
-.gitignore
-.github
-
-# Python
-__pycache__
-*.py[cod]
-*$py.class
-*.so
-.Python
-.env
-.venv
-venv/
-ENV/
-*.egg-info/
-.eggs/
-*.egg
-
-# Jupyter Notebooks (development only)
+# ===== NOTEBOOKS =====
 notebooks/
 *.ipynb
 .ipynb_checkpoints/
 
-# IDE
-.idea/
-.vscode/
-*.swp
-*.swo
-
-# Testing
+# ===== DEVELOPMENT =====
 tests/
-.pytest_cache/
-.coverage
-htmlcov/
-
-# Documentation
 docs/
-*.md
-!README.md
-
-# Data - exclude raw data, keep only processed
-data/raw/
-data/processed/
-*.csv
-
-# Logs
 logs/
 *.log
-app/logs/*.log
-
-# Development files
-requirements-dev.txt
-docker-compose*.yml
 Makefile
+requirements-dev.txt
 
-# UV/Poetry
-.python-version
-uv.lock
-poetry.lock
+# ===== GIT & IDE =====
+.git/
+.gitignore
+.vscode/
+.idea/
 
-# OS
-.DS_Store
-Thumbs.db
+# ===== PYTHON =====
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.mypy_cache/
+*.egg-info/
 
-# Temporary
-tmp/
-temp/
-*.tmp
+# ===== VIRTUAL ENVIRONMENTS =====
+.venv/
+venv/
+env/
