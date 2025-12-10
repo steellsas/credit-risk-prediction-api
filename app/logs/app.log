@@ -1,0 +1,8 @@
+2025-08-21 09:04:01,799 [INFO] Loading aggregated data...
+2025-08-21 09:04:02,045 [INFO] Aggregated data loaded successfully.
+2025-08-21 09:04:23,021 [INFO] Received prediction request for SK_ID_CURR: 100002
+2025-08-21 09:04:24,688 [INFO] Prediction: 0, Probability: 0.3304
+2025-08-21 09:42:15,367 [INFO] Loading aggregated data...
+2025-08-21 09:42:15,603 [INFO] Aggregated data loaded successfully.
+2025-08-21 09:42:18,629 [INFO] Received prediction request for SK_ID_CURR: 100002
+2025-08-21 09:42:20,235 [INFO] Prediction: 0, Probability: 0.4590
