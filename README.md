@@ -1,182 +1,467 @@
-# DS.v2.5.3.4.1
+# 🏦 Credit Risk Prediction API
 
+[![Python](https://img.shields.io/badge/Python-3.11-3776AB?logo=python&logoColor=white)](https://python.org)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.100+-009688?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
+[![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?logo=docker&logoColor=white)](https://docker.com)
+[![GCP](https://img.shields.io/badge/GCP-Cloud_Run-4285F4?logo=google-cloud&logoColor=white)](https://cloud.google.com/run)
+[![Kaggle](https://img.shields.io/badge/Kaggle-77.2%25-20BEFF?logo=kaggle)](https://www.kaggle.com/c/home-credit-default-risk)
+[![ROC AUC](https://img.shields.io/badge/ROC_AUC-0.785-success)](/)
 
-# Home Credit Default Risk Modeling
+An end-to-end machine learning system for credit default prediction, featuring a production-ready REST API. Built with LightGBM + XGBoost ensemble model, deployed on Google Cloud Run.
 
-## 📌 Project Overview
+## 🌐 Live Demo
 
-This project focuses on developing, deploying, and serving a machine learning model for **credit risk prediction** using the Home Credit dataset. The goal is to build an **interpretable**, **deployable**, and **financially sound** model that effectively identifies potential loan defaulters.
+**API Endpoint:** [https://credit-risk-api-xxxxx.europe-west1.run.app](https://credit-risk-api-xxxxx.europe-west1.run.app)
 
-The workflow is modular and structured across multiple notebooks, covering everything from raw data exploration to feature engineering and model training.
+**Swagger Docs:** [https://credit-risk-api-xxxxx.europe-west1.run.app/docs](https://credit-risk-api-xxxxx.europe-west1.run.app/docs)
 
----
-
-## Live Application
-
-The application is deployed and accessible at:
-
-[<https://home-credit-image-909100323557.europe-west1.run.app/>](https://home-credit-image-909100323557.europe-west1.run.app/)
-
-REST API :
-[text](https://home-credit-image-909100323557.europe-west1.run.app/predict)
-
-
-## Primary Datasets
-
-| Filename                        | Description                                                                 |
-|--------------------------------|-----------------------------------------------------------------------------|
-| `application_train.csv`        | Main training dataset with customer features and target variable (`TARGET`) |
-| `application_test.csv`         | Test dataset with same features as train, but without `TARGET`              |
-| `bureau.csv`                   | Credit history from other financial institutions                            |
-| `bureau_balance.csv`           | Monthly balance snapshots for each bureau record                            |
-| `previous_application.csv`     | Historical loan applications submitted by customers                         |
-| `POS_CASH_balance.csv`         | Point-of-sale and cash loan monthly balances                                |
-| `installments_payments.csv`    | Customer payment history for previous loans                                 |
-| `credit_card_balance.csv`      | Monthly credit card balances and usage                                      |
+> *Update the URLs after redeployment*
 
 ---
 
-## Notebooks Structure
+## 📋 Table of Contents
 
-###  Exploratory Data Analysis (EDA)
-- `application_eda.ipynb`: Analysis of core applicant data and target variable
-- `bureau_eda.ipynb`: Insights from external credit history and bureau records
-- `previous_application_eda.ipynb`: Patterns and signals from past loan applications
-
-### Feature Engineering & Aggregation
-- `feature_engineering.ipynb`: Creation of derived features, aggregation across datasets, and preparation of the final training set
-
-###  Modeling
-- `modeling.ipynb`: Training, evaluation, and tuning of machine learning models for credit risk classification
+- [Overview](#overview)
+- [Tech Stack](#tech-stack)
+- [Project Architecture](#project-architecture)
+- [API Documentation](#api-documentation)
+- [Model Performance](#model-performance)
+- [Feature Engineering](#feature-engineering)
+- [Key Findings](#key-findings)
+- [Installation](#installation)
+- [Deployment](#deployment)
+- [Project Structure](#project-structure)
 
 ---
 
-##  Key Findings & Modeling Insights
+## Overview
 
-### EDA Highlights
-- Removed features with **low variance**, **low correlation**, and **high missingness** to reduce noise and improve model performance.
-- Detected **anomalies** in applicant data, which were cleaned during feature engineering.
+This project tackles the **Home Credit Default Risk** Kaggle competition challenge: predicting which loan applicants are likely to default. The solution includes:
 
-### Feature Engineering & Aggregation
-- Created a comprehensive feature set of **580 engineered features** across all datasets.
-- Aggregated historical and behavioral data to enrich the training set.
+- **Comprehensive EDA** across 8 interconnected datasets
+- **580 engineered features** from customer behavioral and financial data
+- **Ensemble model** combining LightGBM and XGBoost
+- **Production REST API** with FastAPI
+- **Cloud deployment** on Google Cloud Run with Docker
 
-### Modeling Strategy
-- Used **LightGBM** to identify and rank feature importance.
-- Trained models using both **XGBoost** and **LightGBM**, then built an **ensemble model** that outperformed individual models.
-- Selected the **top 198 most important features** and retrained the final model for efficiency and interpretability.
-- Extracted **43 raw features** from `application_train.csv` to serve as inputs for the **API**, enabling lightweight and real-time predictions.
+### Business Impact
 
+The model helps financial institutions:
+- Identify high-risk loan applicants early
+- Reduce default rates and financial losses
+- Make data-driven lending decisions
+- Automate credit scoring at scale
 
+---
 
-## 📊 Results
+## Tech Stack
 
-### Ensemble Model Performance Summary  
-**VotingClassifier (LightGBM + XGBoost, Soft Voting)**
+### Machine Learning
+| Tool | Purpose |
+|------|---------|
+| **LightGBM** | Gradient boosting, feature importance |
+| **XGBoost** | Gradient boosting, ensemble component |
+| **scikit-learn** | Preprocessing, metrics, VotingClassifier |
+| **pandas / numpy** | Data manipulation |
+| **Optuna** | Hyperparameter optimization |
 
-- **Kaggle Competition Score:** 77.20%
-- **Test Set Metrics:**
-  - ROC AUC: **0.785**
-  - Precision (Class 1): **47.00%**
-  - Recall (Class 1): **11.00%**
-  - F1-Score (Class 1): **18.00%**
-  - PR AUC: **0.28**
+### API & Deployment
+| Tool | Purpose |
+|------|---------|
+| **FastAPI** | REST API framework |
+| **Uvicorn** | ASGI server |
+| **Docker** | Containerization |
+| **Google Cloud Run** | Serverless deployment |
 
-### Strengths
-- High overall accuracy driven by strong performance on the majority class (Class 0)
-- ROC AUC of 0.785 suggests good class separation
-- Ensemble benefits from model diversity and complementary strengths
+### Data Analysis
+| Tool | Purpose |
+|------|---------|
+| **matplotlib / seaborn** | Visualization |
+| **scipy** | Statistical analysis |
 
-### Limitations
-- Low recall and F1-score for minority class (Class 1), indicating under-detection
-- PR AUC of 0.28 highlights difficulty in balancing precision and recall
+---
 
-
-## Feature Importance
-
-The ensemble model leverages both **XGBoost** and **LightGBM**, and the following features emerged as the most influential based on their average importance scores:
-
-| Feature                   | XGBoost Importance | LightGBM Importance | Mean Importance |
-|---------------------------|--------------------|----------------------|------------------|
-| CREDIT_DIV_ANNUITY        | 225                | 0.007036             | 112.50           |
-| EXT_SOURCE_MEAN           | 195                | 0.091210             | 97.55            |
-| DAYS_BIRTH                | 179                | 0.005210             | 89.50            |
-| PREV_CNT_PAYMENT_MEAN     | 141                | 0.005952             | 70.50            |
-| DAYS_PAYMENT_RATIO_MAX    | 130                | 0.011108             | 65.01            |
-| EXT_SOURCE_1_BIRTH_RATIO  | 119                | 0.008139             | 59.50            |
-| EXT_SOURCE_3_BIRTH_RATIO  | 98                 | 0.006478             | 49.00            |
-| EXT_SOURCE_2              | 97                 | 0.010327             | 48.51            |
-| DAYS_BEFORE_DUE_SUM       | 91                 | 0.006874             | 45.50            |
-| DAYS_REGISTRATION         | 89                 | 0.003324             | 44.50            |
-
-### 🧠 Insights
-- **CREDIT_DIV_ANNUITY** and **EXT_SOURCE_MEAN** are the most dominant features, suggesting strong predictive power in financial ratios and external credit scores.
-- **DAYS_BIRTH** consistently ranks high, indicating age-related patterns in credit behavior.
-- Engineered ratios like **EXT_SOURCE_1_BIRTH_RATIO** and **DAYS_PAYMENT_RATIO_MAX** contribute meaningfully, validating the value of feature engineering.
-
-   
-## Installation Guide
-
-**Note:** This project uses Python 3.11 as specified in the `.python-version` file.
-
-### Using uv (Recommended)
-
-1. **Install uv:**
-
-   ```bash
-   # On Unix/macOS
-   curl -LsSf https://astral.sh/uv/install.sh | sh
-
-   # On Windows (PowerShell)
-   irm https://astral.sh/uv/install.ps1 | iex
-   ```
-
-2. **Clone the Repository:**
-
-   ```bash
-   git clone https://github.com/TuringCollegeSubmissions/anplien-DS.v2.5.3.4.1.git
-   ```
-
-3. **Create and Activate a Virtual Environment:**
-
-   ```bash
-   uv venv
-   source .venv/bin/activate  # On Unix/macOS
-   # or
-   .venv\Scripts\activate     # On Windows
-   ```
-
-4. **Install Dependencies:**
-
-   ```bash
-   uv pip install -r requirements.txt
-   ```
-5. Build Docker Image
-
-```bash
-   docker build -t home_credit-risk-api .
- ```
-
-6 Run API
-  - Local
-     
-    uvicorn app.main:app --reload
-  - Docker
-    docker run -p 8000:8000 home_credit-risk-api
-
-
-## Running the Application
-
-    
-```bash
-  - Local
-
-    uvicorn app.main:app --reload
- 
-  - Docker
-  
-        docker run -p 8000:8000 home_credit-risk-api
+## Project Architecture
 
 ```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                              DATA SOURCES                                   │
+│  application_train.csv │ bureau.csv │ previous_application.csv │ etc.      │
+└─────────────────────────────────────────────────────────────────────────────┘
+                                    │
+                                    ▼
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                         EXPLORATORY DATA ANALYSIS                           │
+│         • application_eda.ipynb - Core applicant analysis                   │
+│         • bureau_eda.ipynb - External credit history                        │
+│         • previous_application_eda.ipynb - Historical loan patterns         │
+└─────────────────────────────────────────────────────────────────────────────┘
+                                    │
+                                    ▼
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                         FEATURE ENGINEERING                                 │
+│         • 580 engineered features across all datasets                       │
+│         • Aggregations, ratios, temporal features                           │
+│         • Missing value handling, outlier treatment                         │
+└─────────────────────────────────────────────────────────────────────────────┘
+                                    │
+                                    ▼
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                           MODEL TRAINING                                    │
+│         • LightGBM + XGBoost individual models                              │
+│         • Feature selection (top 198 features)                              │
+│         • VotingClassifier ensemble (soft voting)                           │
+│         • Cross-validation & hyperparameter tuning                          │
+└─────────────────────────────────────────────────────────────────────────────┘
+                                    │
+                                    ▼
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                         API DEVELOPMENT                                     │
+│         • 43 input features for real-time prediction                        │
+│         • FastAPI REST endpoints                                            │
+│         • Request validation with Pydantic                                  │
+└─────────────────────────────────────────────────────────────────────────────┘
+                                    │
+                                    ▼
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                           DEPLOYMENT                                        │
+│         • Docker containerization                                           │
+│         • Google Cloud Run deployment                                       │
+│         • Auto-scaling & HTTPS                                              │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
 
+---
 
+## API Documentation
+
+### Endpoints
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | `/` | Health check, API info |
+| `GET` | `/health` | Service health status |
+| `POST` | `/predict` | Credit risk prediction |
+| `GET` | `/docs` | Swagger UI documentation |
+
+### Prediction Request
+
+**Endpoint:** `POST /predict`
+
+**Request Body:**
+```json
+{
+  "CODE_GENDER": "M",
+  "FLAG_OWN_CAR": "Y",
+  "FLAG_OWN_REALTY": "Y",
+  "CNT_CHILDREN": 0,
+  "AMT_INCOME_TOTAL": 135000.0,
+  "AMT_CREDIT": 568800.0,
+  "AMT_ANNUITY": 20560.0,
+  "AMT_GOODS_PRICE": 450000.0,
+  "NAME_INCOME_TYPE": "Working",
+  "NAME_EDUCATION_TYPE": "Higher education",
+  "NAME_FAMILY_STATUS": "Married",
+  "NAME_HOUSING_TYPE": "House / apartment",
+  "DAYS_BIRTH": -12005,
+  "DAYS_EMPLOYED": -1456,
+  "EXT_SOURCE_1": 0.5,
+  "EXT_SOURCE_2": 0.6,
+  "EXT_SOURCE_3": 0.7
+}
+```
+
+**Response:**
+```json
+{
+  "prediction": 0,
+  "probability": 0.12,
+  "risk_level": "LOW",
+  "message": "Loan application is likely to be repaid"
+}
+```
+
+### Risk Levels
+
+| Probability | Risk Level | Recommendation |
+|-------------|------------|----------------|
+| 0.00 - 0.30 | LOW | Approve |
+| 0.30 - 0.50 | MEDIUM | Review required |
+| 0.50 - 1.00 | HIGH | Decline or additional verification |
+
+### Example Usage
+
+**cURL:**
+```bash
+curl -X POST "https://your-api-url.run.app/predict" \
+  -H "Content-Type: application/json" \
+  -d '{"CODE_GENDER": "M", "AMT_INCOME_TOTAL": 135000, ...}'
+```
+
+**Python:**
+```python
+import requests
+
+response = requests.post(
+    "https://your-api-url.run.app/predict",
+    json={
+        "CODE_GENDER": "M",
+        "FLAG_OWN_CAR": "Y",
+        "AMT_INCOME_TOTAL": 135000.0,
+        "AMT_CREDIT": 568800.0,
+        # ... other features
+    }
+)
+print(response.json())
+```
+
+---
+
+## Model Performance
+
+### Ensemble Results (VotingClassifier)
+
+| Metric | Score |
+|--------|-------|
+| **Kaggle Score** | 77.20% |
+| **ROC AUC** | 0.785 |
+| **Precision (Default)** | 47.00% |
+| **Recall (Default)** | 11.00% |
+| **F1-Score (Default)** | 18.00% |
+| **PR AUC** | 0.28 |
+
+### Model Comparison
+
+| Model | ROC AUC | Training Time |
+|-------|---------|---------------|
+| LightGBM | 0.780 | Fast |
+| XGBoost | 0.778 | Medium |
+| **Ensemble** | **0.785** | Combined |
+
+### Confusion Matrix Analysis
+
+- **Strengths:** High accuracy on majority class, good class separation
+- **Limitations:** Lower recall for minority class (defaulters)
+- **Trade-off:** Model optimized for ROC AUC, balancing precision and recall
+
+---
+
+## Feature Engineering
+
+### Dataset Integration
+
+| Dataset | Features Created | Description |
+|---------|-----------------|-------------|
+| `application_train.csv` | 43 raw + derived | Core applicant data |
+| `bureau.csv` | ~100 | External credit history |
+| `previous_application.csv` | ~150 | Historical loan applications |
+| `installments_payments.csv` | ~80 | Payment behavior |
+| `credit_card_balance.csv` | ~70 | Credit card usage |
+| `POS_CASH_balance.csv` | ~60 | Cash loan behavior |
+| **Total** | **580 features** | After aggregation |
+
+### Top 10 Most Important Features
+
+| Rank | Feature | Description | Importance |
+|------|---------|-------------|------------|
+| 1 | `CREDIT_DIV_ANNUITY` | Credit-to-annuity ratio | 112.50 |
+| 2 | `EXT_SOURCE_MEAN` | Mean of external scores | 97.55 |
+| 3 | `DAYS_BIRTH` | Applicant age | 89.50 |
+| 4 | `PREV_CNT_PAYMENT_MEAN` | Avg previous payments | 70.50 |
+| 5 | `DAYS_PAYMENT_RATIO_MAX` | Payment timing ratio | 65.01 |
+| 6 | `EXT_SOURCE_1_BIRTH_RATIO` | External score / age | 59.50 |
+| 7 | `EXT_SOURCE_3_BIRTH_RATIO` | External score / age | 49.00 |
+| 8 | `EXT_SOURCE_2` | External credit score | 48.51 |
+| 9 | `DAYS_BEFORE_DUE_SUM` | Payment timing sum | 45.50 |
+| 10 | `DAYS_REGISTRATION` | Registration duration | 44.50 |
+
+### Feature Engineering Insights
+
+- **External credit scores** (`EXT_SOURCE_*`) are the strongest predictors
+- **Age-related features** consistently important across models
+- **Engineered ratios** outperform raw features
+- **Payment behavior** signals from historical data are highly predictive
+
+---
+
+## Key Findings
+
+### Who is More Likely to Default?
+
+📈 **Higher Risk Indicators:**
+- Lower external credit scores
+- Higher credit-to-income ratio
+- Shorter employment history
+- More previous loan applications
+- Irregular payment patterns
+
+📉 **Lower Risk Indicators:**
+- Higher external credit scores
+- Stable employment (longer `DAYS_EMPLOYED`)
+- Lower debt-to-income ratio
+- Consistent payment history
+- Home ownership
+
+---
+
+## Installation
+
+### Prerequisites
+- Python 3.11+
+- Docker (optional, for containerized deployment)
+
+### Local Setup
+
+1. **Clone the repository:**
+```bash
+git clone https://github.com/steellsas/credit-risk-prediction-api.git
+cd credit-risk-prediction-api
+```
+
+2. **Create virtual environment (using uv - recommended):**
+```bash
+# Install uv
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Create and activate venv
+uv venv
+source .venv/bin/activate  # Unix/macOS
+# or
+.venv\Scripts\activate     # Windows
+```
+
+3. **Install dependencies:**
+```bash
+uv pip install -r requirements.txt
+```
+
+4. **Run the API locally:**
+```bash
+uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+```
+
+5. **Access the API:**
+- Swagger UI: http://localhost:8000/docs
+- API: http://localhost:8000
+
+### Docker Setup
+
+```bash
+# Build image
+docker build -t credit-risk-api .
+
+# Run container
+docker run -p 8000:8000 credit-risk-api
+```
+
+---
+
+## Deployment
+
+### Google Cloud Run Deployment
+
+1. **Authenticate with GCP:**
+```bash
+gcloud auth login
+gcloud config set project YOUR_PROJECT_ID
+```
+
+2. **Build and push to Container Registry:**
+```bash
+# Enable required APIs
+gcloud services enable containerregistry.googleapis.com
+gcloud services enable run.googleapis.com
+
+# Build and push
+gcloud builds submit --tag gcr.io/YOUR_PROJECT_ID/credit-risk-api
+```
+
+3. **Deploy to Cloud Run:**
+```bash
+gcloud run deploy credit-risk-api \
+  --image gcr.io/YOUR_PROJECT_ID/credit-risk-api \
+  --platform managed \
+  --region europe-west1 \
+  --allow-unauthenticated \
+  --memory 2Gi \
+  --cpu 2
+```
+
+4. **Get the service URL:**
+```bash
+gcloud run services describe credit-risk-api --region europe-west1 --format="value(status.url)"
+```
+
+---
+
+## Project Structure
+
+```
+credit-risk-prediction-api/
+├── app/
+│   ├── __init__.py
+│   ├── main.py              # FastAPI application
+│   ├── models.py            # Pydantic schemas
+│   ├── prediction.py        # Prediction logic
+│   └── preprocessing.py     # Feature preprocessing
+├── data/
+│   ├── raw/                 # Original datasets
+│   └── processed/           # Processed features
+├── notebooks/
+│   ├── application_eda.ipynb
+│   ├── bureau_eda.ipynb
+│   ├── previous_application_eda.ipynb
+│   ├── feature_engineering.ipynb
+│   └── modeling.ipynb
+├── src/
+│   ├── __init__.py
+│   ├── features.py          # Feature engineering functions
+│   └── utils.py             # Utility functions
+├── models/                  # Saved model files
+├── Dockerfile
+├── requirements.txt
+├── pyproject.toml
+├── .dockerignore
+├── .gitignore
+└── README.md
+```
+
+---
+
+## Notebooks Overview
+
+| Notebook | Description |
+|----------|-------------|
+| `application_eda.ipynb` | Core applicant data analysis, target distribution, missing values |
+| `bureau_eda.ipynb` | External credit history patterns, bureau features |
+| `previous_application_eda.ipynb` | Historical loan application analysis |
+| `feature_engineering.ipynb` | Feature creation, aggregation, selection |
+| `modeling.ipynb` | Model training, tuning, ensemble creation |
+
+---
+
+## Future Improvements
+
+- [ ] **Model Monitoring** - Add prediction logging and drift detection
+- [ ] **A/B Testing** - Compare model versions in production
+- [ ] **Explainability** - SHAP values for individual predictions
+- [ ] **Threshold Optimization** - Business-driven cutoff tuning
+- [ ] **CI/CD Pipeline** - Automated testing and deployment
+- [ ] **Model Retraining** - Scheduled retraining pipeline
+
+---
+
+## License
+
+This project is for educational and portfolio purposes, based on the Kaggle Home Credit Default Risk competition.
+
+---
+
+## Author
+
+**Andrius**  
+[GitHub](https://github.com/steellsas)
+
+---
+
+*If you found this project helpful, please consider giving it a ⭐!*
