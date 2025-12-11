@@ -1,9 +1,37 @@
-__pycache__
+# ===== DATA FILES =====
+data/raw/
+data/processed/
+*.csv
+*.parquet
+
+# ===== NOTEBOOKS =====
+notebooks/
+*.ipynb
+.ipynb_checkpoints/
+
+# ===== DEVELOPMENT =====
+tests/
+docs/
+logs/
+*.log
+Makefile
+requirements-dev.txt
+
+# ===== GIT & IDE =====
+.git/
+.gitignore
+.vscode/
+.idea/
+
+# ===== PYTHON =====
+__pycache__/
 *.pyc
 *.pyo
-*.pyd
-.pytest_cache
-.coverage
-.git
-.gitignore
-README.md
+.pytest_cache/
+.mypy_cache/
+*.egg-info/
+
+# ===== VIRTUAL ENVIRONMENTS =====
+.venv/
+venv/
+env/
